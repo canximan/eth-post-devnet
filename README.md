@@ -17,6 +17,29 @@ First, install Docker. Then, run:
 
 ```
 git clone https://github.com/rauljordan/eth-pos-devnet && cd eth-pos-devnet
+```
+
+
+Clone Prysm:
+```
+git clone https://github.com/prysmaticlabs/prysm.git
+```
+
+Checkout correct version and Build Prysm:
+```
+git checkout v3.1.2
+go build -o=../beacon-chain ./cmd/beacon-chain
+go build -o=../validator ./cmd/validator
+go build -o=../prysmctl ./cmd/prysmctl
+```
+
+Move back to eth-pos-devnet and generate prysm genesis state:
+```
+prysmctl testnet generate-genesis --num-validators=64 --output-ssz=./consensus/genesis.ssz --chain-config-file=./consensus/config.yml
+```
+
+Then run:
+```
 docker compose up -d
 ```
 
